@@ -52,6 +52,25 @@ for (i in 2120375:2120000) {
   df <- bind_rows(df,dftest)
 }
 
+# get home and away goals with regular expression
+result_home_away <- df$result %>% str_match("(.) - (.)")
+goals_home <- as.numeric(as.character(result_home_away[,2]))
+goals_away <- as.numeric(as.character(result_home_away[,3]))
+df <- cbind(df, goals_home, goals_away)
+df$result <- NULL
+
+# total number of goals
+df$total_goals <- df$goals_home + df$goals_away
+
+#df %>% select(referee_name, total_goals) %>% group_by('referee_name') %>% summarize(tst = mean(total_goals))
+
+# Compute statistics about referees
+df$referee_name <- as.factor(df$referee_name)
+referee_stats <- df %>% group_by(referee_name) %>% summarise(
+  number_of_matches=length(total_goals),
+  avg_total_goals_per_match = mean(total_goals)
+)
+
 # test_that("team home is a character array", {
 #   expect_equal(is.character(match$team_home), TRUE)
 #   expect_equal(is.character(match$team_away), TRUE)
