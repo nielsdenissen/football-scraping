@@ -71,6 +71,13 @@ referee_stats <- df %>% group_by(referee_name) %>% summarise(
   avg_total_goals_per_match = mean(total_goals)
 )
 
+hist(referee_stats$number_of_matches)
+referee_stats_subset <- referee_stats[referee_stats$number_of_matches > 2,]
+hist(referee_stats_subset$avg_total_goals_per_match)
+plot(referee_stats_subset$avg_total_goals_per_match ~ referee_stats_subset$referee_name)
+
+referee_stats_subset
+
 # test_that("team home is a character array", {
 #   expect_equal(is.character(match$team_home), TRUE)
 #   expect_equal(is.character(match$team_away), TRUE)
