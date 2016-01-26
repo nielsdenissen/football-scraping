@@ -7,7 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(GGally)
 
-setwd("~/accellerator/flight-ticket-scraping/")
+setwd("~/accellerator/football-scraping/")
 
 scrape_match <- function(url) {
 
@@ -38,4 +38,12 @@ scrape_match <- function(url) {
 
 }
 
-match <- scrape_match("http://int.soccerway.com/matches/2016/01/16/italy/serie-a/atalanta-bergamo/fc-internazionale-milano/2120570/?ICID=PL_MS_01")
+scrape_match_by_number <- function(number) {
+  scrape_match(paste0("http://int.soccerway.com/matches/9999/99/99/some-league/serie-a/team1/team2/", number))
+}
+
+for (i in 2120390:2120000) {
+  print(paste("get match", i))
+  df = rbind(df, scrape_match_by_number(i))
+  Sys.sleep(0.2)
+}
