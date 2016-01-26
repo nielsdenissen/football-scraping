@@ -8,6 +8,8 @@ library(ggplot2)
 library(GGally)
 library(testthat)
 
+setwd("~/accellerator/football-scraping/")
+
 scrape_match <- function(url) {
 
   football <- read_html(url)
@@ -42,7 +44,6 @@ scrape_match_by_number <- function(number) {
   scrape_match(paste0("http://int.soccerway.com/matches/9999/99/99/some-league/serie-a/team1/team2/", number))
 }
 
-
 df <- data.frame()
 for (i in 2120375:2120000) {
   print(paste("get match", i))
@@ -51,14 +52,8 @@ for (i in 2120375:2120000) {
   df <- bind_rows(df,dftest)
 }
 
-
-
-
-
-
 # test_that("team home is a character array", {
 #   expect_equal(is.character(match$team_home), TRUE)
 #   expect_equal(is.character(match$team_away), TRUE)
 #   expect_equal(is.character(match$result), TRUE)
 # })
-
